@@ -1,0 +1,68 @@
+/* ------ Scroll header ------ */
+
+/* .header {
+  transition: all 0.4s ease;
+}
+[data-direction="down"] .header {
+  background-color: #fff;
+  transform: translateY(-80%);
+}
+
+[data-direction="down"] .nav__item .nav__item-block:nth-child(1) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+[data-direction="down"] .nav__item .nav__item-block .text-1 {
+  opacity: 0;
+  visibility: hidden;
+}
+
+[data-direction="down"] .nav__logo {
+  transition-delay: 0.3s;
+  transition: all 0.2s ease;
+  transform: translateY(20%);
+} */
+
+/* ------ >Scroll header ------ */
+
+/* ------ Mobile nav open ------ */
+
+.nav {
+  display: block;
+  visibility: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  transition: all 0.4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+body.menu-open .nav {
+  visibility: visible;
+  transition: all 0.4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.nav-ellipse {
+  transition: opacity 0.3s ease;
+}
+
+.is-loaded .nav__link.w--current .nav-ellipse {
+  opacity: 1;
+}
+.is-loading .nav__link.w--current .nav-ellipse {
+  opacity: 0;
+}
+
+.nav__link {
+  transition: padding 0.3s ease, color 0.3s ease;
+}
+
+.is-loaded .nav__link.w--current {
+  padding-left: 1.125rem;
+  pointer-events: none;
+}
+
+.is-loading .nav__link.w--current {
+  padding-left: 0rem;
+}
+
+/* ------ >Mobile nav open ------ */
