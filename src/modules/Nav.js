@@ -9,6 +9,7 @@ export default class extends module {
             click: {
               open: 'openNav',
               close: 'closeNav',
+              toggle: 'closeNav',
             }
           }
     }
@@ -23,5 +24,8 @@ export default class extends module {
     
     closeNav(){
         nav.classList.remove("menu-open")
+    }
+    closeNav(){
+        nav.classList.toggle("menu-open")
     }
 }
