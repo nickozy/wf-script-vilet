@@ -10,6 +10,5 @@ export default class extends module {
       FsAttributes.cmsfilter.destroy();
       FsAttributes.cmsfilter.init();
     }, 50)
-
   }  
 }

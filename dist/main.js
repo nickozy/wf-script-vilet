@@ -76,7 +76,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var modujs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! modujs */ \"./node_modules/modujs/dist/main.esm.js\");\n\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (class extends modujs__WEBPACK_IMPORTED_MODULE_0__.module {\n  constructor(m) {\n    super(m);\n  }\n\n  init() {\n    setTimeout(()=>{\n      FsAttributes.cmsfilter.destroy();\n      FsAttributes.cmsfilter.init();\n    }, 50)\n\n  }  \n});\n\n\n//# sourceURL=webpack://wf-script/./src/modules/Filter.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var modujs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! modujs */ \"./node_modules/modujs/dist/main.esm.js\");\n\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (class extends modujs__WEBPACK_IMPORTED_MODULE_0__.module {\n  constructor(m) {\n    super(m);\n  }\n\n  init() {\n    setTimeout(()=>{\n      FsAttributes.cmsfilter.destroy();\n      FsAttributes.cmsfilter.init();\n    }, 50)\n  }  \n});\n\n\n//# sourceURL=webpack://wf-script/./src/modules/Filter.js?");
 
 /***/ }),
 
