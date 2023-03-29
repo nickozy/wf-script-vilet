@@ -1,4 +1,3 @@
-export { default as Prelaunch } from "./modules/Prelaunch";
 export { default as Load } from "./modules/Load";
 export { default as Scroll } from "./modules/Scroll";
 export { default as Scrollbar } from "./modules/Scrollbar";

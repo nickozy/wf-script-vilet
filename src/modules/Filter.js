@@ -6,10 +6,10 @@ export default class extends module {
   }
 
   init() {
-    window.addEventListener("load", ()=>{
-      console.log('true')
-      FsAttributes.cmsfilter.destroy()
-      FsAttributes.cmsfilter.init()
-    })
-    }
+    setTimeout(()=>{
+      FsAttributes.cmsfilter.destroy();
+      FsAttributes.cmsfilter.init();
+    }, 50)
+
+  }  
 }
