@@ -1,7 +1,5 @@
-/**
- * lil-gui
- * https://lil-gui.georgealways.com
- * @version 0.16.1
- * @author George Michael Brower
- * @license MIT
+/*!
+ * perfect-scrollbar v1.5.3
+ * Copyright 2021 Hyunje Jun, MDBootstrap and Contributors
+ * Licensed under MIT
  */
