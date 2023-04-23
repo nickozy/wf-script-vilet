@@ -1,20 +1,35 @@
-if (window.innerWidth >= 991) {
-  $("#sharebtn").on("mouseenter", () => {
-    $(".share").addClass("open");
-    $(".share .body-caps").text("CLOSE");
+//
+//
+
+const shMain = $(".share");
+const shText = $(".share .body-caps");
+const shBtn = $("#sharebtn");
+
+//
+//
+
+if (window.innerWidth > 991) {
+  shBtn.on("mouseenter", () => {
+    shMain.addClass("open");
+    shText.text("CLOSE");
   });
-  $("#sharebtn").on("click", closeShare);
+  shBtn.on("click", closeShare);
 } else {
-  $("#sharebtn").on("click", () => {
-    $(".share").addClass("open");
-    $(".share .body-caps").text("CLOSE");
-  });
-  $("#sharebtn").on("click", closeShare);
+  shBtn.on("click", toggleShare);
 }
 
 function closeShare() {
   if ($(".share").hasClass("open")) {
-    $(".share").removeClass("open");
-    $(".share .body-caps").text("SHARE");
+    shMain.removeClass("open");
+    shText.text("SHARE");
+  }
+}
+
+function toggleShare() {
+  shMain.toggleClass("open");
+  if ($(".share").hasClass("open")) {
+    shText.text("CLOSE");
+  } else {
+    shText.text("SHARE");
   }
 }
