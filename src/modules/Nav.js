@@ -33,10 +33,10 @@ export default class extends module {
     toggleMap(){
       
         if (nav.classList.contains('map-show')) {
-          mapText.innerHTML = "SHOW MAP"
+          mapText.textContent = "SHOW MAP"
             nav.classList.remove('map-show');
           } else {
-            mapText.innerHTML = "SHOW LIST"
+            mapText.textContent = "SHOW LIST"
             nav.classList.add('map-show');
           }
     }
