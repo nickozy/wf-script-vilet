@@ -1,6 +1,7 @@
 import { module } from 'modujs';
 
 const nav = document.body;
+const mapText = document.querySelector(".map-text");
 
 export default class extends module {
     constructor(m) {
@@ -30,9 +31,12 @@ export default class extends module {
           }
     }
     toggleMap(){
+      
         if (nav.classList.contains('map-show')) {
+          mapText.innerHTML = "SHOW MAP"
             nav.classList.remove('map-show');
           } else {
+            mapText.innerHTML = "SHOW LIST"
             nav.classList.add('map-show');
           }
     }
