@@ -26,6 +26,8 @@ export default class extends module {
         function navCheck(){
     const main = document.body
             main.classList.remove('menu-open');
+            main.classList.remove('menu-open--edu');
+
             
         }
         
