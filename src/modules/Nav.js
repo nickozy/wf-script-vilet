@@ -13,7 +13,7 @@ export default class extends module {
             },
             mouseenter: {
               edu: 'openEdu',
-              // educlose: 'closeEdu', 
+              educlose: 'closeEdu', 
             },
             mouseleave:{
               educlose: 'closeEdu', 
