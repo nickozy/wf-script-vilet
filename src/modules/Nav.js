@@ -16,7 +16,7 @@ export default class extends module {
               educlose: 'closeEdu', 
             },
             mouseleave:{
-              educlose: 'closeEdu', 
+              eduleave: 'closeEdu', 
             }
           }
     }
