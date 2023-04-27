@@ -6,11 +6,9 @@ export default class extends module {
   }
 
   init() {
-    window.onload = () => {
     setTimeout(()=>{
       FsAttributes.cmsfilter.destroy();
       FsAttributes.cmsfilter.init();
     }, 50)
-  }  
 }
 }
