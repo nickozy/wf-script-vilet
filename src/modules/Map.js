@@ -243,7 +243,7 @@ $(".open-map").click(function (e) {
   //Забираем координаты из кнопки
 
   $(".open-map").removeClass("active");
-  $(e).addClass("active");
+  $(this).addClass("active");
   var loc = $(this).attr("data-coord");
   loc = JSON.parse(loc);
   //Увеличиваем карту до нужного размера
