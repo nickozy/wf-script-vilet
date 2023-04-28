@@ -239,10 +239,11 @@ function init() {
 //
 //
 
-$(".open-map").click(function () {
+$(".open-map").click(function (e) {
   //Забираем координаты из кнопки
+
   $(".open-map").removeClass("active");
-  $(".open-map").addClass("active");
+  $(e).addClass("active");
   var loc = $(this).attr("data-coord");
   loc = JSON.parse(loc);
   //Увеличиваем карту до нужного размера
