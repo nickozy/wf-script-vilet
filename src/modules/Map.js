@@ -12,11 +12,11 @@ export default class extends module {
     }
 
 
-    current(){
-      const el = this.el
-      $('.store-locator__list-item').removeClass("active")
-          el.classList.add('active');
-        }
+    // current(){
+    //   const el = this.el
+    //   $('.store-locator__list-item').removeClass("active")
+    //       el.classList.add('active');
+    //     }
   
     
 
@@ -241,6 +241,8 @@ function init() {
 
 $(".open-map").click(function () {
   //Забираем координаты из кнопки
+  $(".open-map").removeClass("active");
+  $(".open-map").addClass("active");
   var loc = $(this).attr("data-coord");
   loc = JSON.parse(loc);
   //Увеличиваем карту до нужного размера
