@@ -242,8 +242,8 @@ function init() {
 $(".open-map").click(function (e) {
   //Забираем координаты из кнопки
 
-  $(".open-map").removeClass("active");
-  $(this).addClass("active");
+  $(".open-map").parent('store-locator__list-item').removeClass("active");
+  $(this).parent("store-locator__list-item").addClass("active");
   var loc = $(this).attr("data-coord");
   loc = JSON.parse(loc);
   //Увеличиваем карту до нужного размера
