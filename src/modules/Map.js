@@ -3,8 +3,22 @@ import { module } from 'modujs';
 export default class extends module {
     constructor(m) {
         super(m);
+        this.events = {
+          click: {
+            current: 'current'
+          }
+
+        }
     }
 
+
+    current(){
+      const el = this.el
+      $('.store-locator__list-item').removeClass("active")
+          el.classList.add('active');
+        }
+  
+    
 
     init() {
       
@@ -43,7 +57,6 @@ const shopList = collectionItems.reduce((acc, item) => {
 }, []);
 
 console.log(shopList); // Вывести список магазинов в консоль
-
 
 
 ymaps.ready(init);
