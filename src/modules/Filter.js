@@ -5,10 +5,10 @@ export default class extends module {
     super(m);
   }
 
-//   init() {
-//     setTimeout(()=>{
-//       FsAttributes.cmsfilter.destroy();
-//       FsAttributes.cmsfilter.init();
-//     }, 50)
-// }
+  init() {
+    setTimeout(()=>{
+      FsAttributes.cmsfilter.destroy();
+      FsAttributes.cmsfilter.init();
+    }, 50)
+}
 }
