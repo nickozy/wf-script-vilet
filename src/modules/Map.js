@@ -1,68 +1,5 @@
 import { module } from 'modujs';
 
-// const getPlacemarkContent = (id, cityName, active) => {
-//   const template = ymaps.templateLayoutFactory.createClass(
-//     `<svg style="z-index: 500;" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" id="${id}">
-//       <rect x="0.5" y="0.500488" width="31" height="31" rx="15.5" fill="url(#paint0_linear_387_4228)"/>
-//       <path d="M10.7779 9.00049L15.9984 23.3205H16.0441L21.2208 9.00049H22.8405L16.8768 25.0005H15.0982L9.1582 9.00049H10.7779Z" fill="#231F20"/>
-//       <rect x="0.5" y="0.500488" width="31" height="31" rx="15.5" stroke="#231F20"/>
-//       <defs>
-//         <linearGradient id="paint0_linear_387_4228" x1="16" y1="0.000488281" x2="16" y2="32.0005" gradientUnits="userSpaceOnUse">
-//           <stop stop-color="#F7D7E5"/>
-//           <stop offset="1" stop-color="#F9D4CC"/>
-//         </linearGradient>
-//       </defs>
-//     </svg>`,
-//     {
-//       build:
-//         function() {
-//           template.superclass.build.call(this);
-//
-//           console.log(this)
-//
-//           this.getData().geoObject.events.add(
-//             'click',
-//             () => {
-//               console.log('click')
-//             },
-//             this,
-//           );
-//
-//
-//
-//           const placemarkEl = document.getElementById(id)
-//
-//           placemarkEl?.addEventListener('click', () => {
-//             // Старайся добавлять в массивы id
-//             const shopsCollection = document.querySelectorAll('.store-locator__list-item')
-//             const currentCityEl = document.getElementById(cityName)
-//             const currentShopEl = document.getElementById(id)?.parentNode
-//
-//             if (currentCityEl.classList.contains('fs-cmsfilter_active')) {
-//               shopsCollection.forEach(el => {
-//                 el.attributes['data-city'] !== currentShopEl.attributes['data-city']
-//                 && el.classList.remove('active')
-//               })
-//             }
-//
-//             currentCityEl.click()
-//
-//             myMap.setZoom(16, { smooth: true, centering: true });
-//             setTimeout(() => myMap.panTo(coordinates), 50)
-//
-//             setTimeout(() => {
-//               currentShopEl.classList.add('active')
-//               currentCityEl.classList.add('fs-cmsfilter_active')
-//             }, 200)
-//           })
-//         },
-//       disableDomEventListening: false
-//     }
-//   )
-//
-//   return template
-// }
-
 export default class extends module {
   constructor(m) {
     super(m);
@@ -85,6 +22,7 @@ export default class extends module {
       var placemarkCollections = {};
       var placemarkList = {};
       const collectionItems = [...document.querySelectorAll(".collection-item")];
+      let activePlacemark;
 
       const cityList = collectionItems.reduce((acc, item) => {
         const city = item.dataset.city; // Получить имя города из атрибута data-city элемента коллекции
@@ -142,7 +80,7 @@ export default class extends module {
             const shopName = shopInfo.name
             const coordinates = shopInfo.coordinates
 
-            var shopPlacemark = new ymaps.Placemark(coordinates, {
+            const shopPlacemark = new ymaps.Placemark(coordinates, {
               hintContent: shopName,
               hasBalloon: false,
               url: shopInfo.url
@@ -150,7 +88,6 @@ export default class extends module {
               // Опции.
               // Необходимо указать данный тип макета.
               iconLayout: 'default#imageWithContent',
-              // iconLayout: getPlacemarkContent(false),
               // Своё изображение иконки метки.
               iconImageHref: 'https://uploads-ssl.webflow.com/640dfc44890e1e178b3b2f19/6449f3ca43a6861b851a4938_vilet-pin.svg',
               // Размеры метки.
@@ -186,7 +123,9 @@ export default class extends module {
               }
 
               myMap.setZoom(16, { smooth: true, centering: true });
-              setTimeout(() => myMap.panTo(coordinates), 50)
+              setTimeout(() => myMap.panTo(coordinates, {
+                flying: true
+              }), 50)
 
               setTimeout(() => {
                 const currentShopEl = document.getElementById(shopName)?.parentNode
@@ -207,6 +146,14 @@ export default class extends module {
 
           // Добавляем коллекцию на карту
           myMap.geoObjects.add(cityCollection);
+
+          cityCollection.events.add('click', function(e) {
+            if (activePlacemark) {
+              activePlacemark.options.set('iconImageHref', 'https://uploads-ssl.webflow.com/640dfc44890e1e178b3b2f19/6449f3ca43a6861b851a4938_vilet-pin.svg')
+            }
+            activePlacemark = e.get('target');
+            activePlacemark.options.set('iconImageHref', 'https://uploads-ssl.webflow.com/644cf0bb77c9415291dcb44f/644e318c2508af5c44c0b028_vilet-pin-active.svg')
+          })
         }
 
         // myMap.geoObjects.events.add('click', function (e) {
@@ -298,7 +245,6 @@ export default class extends module {
       // Работает также на элементах которых еще нет в dom!
       $(document).on("click", ".open-map", function () {
         //Забираем координаты из кнопки
-
         $(".open-map").parents(".store-locator__list-item").removeClass("active");
         $(this).parents(".store-locator__list-item").addClass("active");
         var loc = $(this).attr("data-coord");
@@ -306,7 +252,25 @@ export default class extends module {
         //Увеличиваем карту до нужного размера
         myMap.setZoom(16, { smooth: true, centering: true });
         //Перемещаем карту к нужной метке
-        myMap.panTo(loc);
+        myMap.panTo(loc, { flying: true });
+
+        // И смена цвета меток в обратную сторону
+        const myGeoQuery = ymaps.geoQuery(myMap.geoObjects);
+
+        myGeoQuery.search(function(element) {
+          const elementCenter = element.geometry.getCoordinates();
+
+          if (elementCenter[0] === loc[0] && elementCenter[1] === loc[1]) {
+            if (activePlacemark) {
+              activePlacemark.options.set('iconImageHref', 'https://uploads-ssl.webflow.com/640dfc44890e1e178b3b2f19/6449f3ca43a6861b851a4938_vilet-pin.svg')
+            }
+            activePlacemark = element
+            activePlacemark.options.set('iconImageHref', 'https://uploads-ssl.webflow.com/644cf0bb77c9415291dcb44f/644e318c2508af5c44c0b028_vilet-pin-active.svg')
+            return true;
+          } else {
+            return false;
+          }
+        });
         // placemarkList[cityId][shopId].events.fire("click");
       });
     }, 50)
