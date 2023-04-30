@@ -1,19 +1,66 @@
 import { module } from 'modujs';
 
-// const getPlacemarkContent = (active) => {
-//   return ymaps.templateLayoutFactory.createClass(
-//       `<svg width="32" height="32" view-box="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-//         <rect x="0.5" y="0.500488" width="31" height="31" rx="15.5" fill="url(#paint0_linear_387_4228)"/>
-//         <path d="M10.7779 9.00049L15.9984 23.3205H16.0441L21.2208 9.00049H22.8405L16.8768 25.0005H15.0982L9.1582 9.00049H10.7779Z" fill="#231F20"/>
-//         <rect x="0.5" y="0.500488" width="31" height="31" rx="15.5" stroke="#231F20"/>
-//         <defs>
-//             <linear-gradient x1="16" y1="0.000488281" x2="16" y2="32.0005" gradient-units="userSpaceOnUse">
-//             <stop stop-color="#F7D7E5" />
-//             <stop offset="1" stop-color="#F9D4CC" />
-//             </linear-gradient>
-//         </defs>
-//       </svg>`,
+// const getPlacemarkContent = (id, cityName, active) => {
+//   const template = ymaps.templateLayoutFactory.createClass(
+//     `<svg style="z-index: 500;" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" id="${id}">
+//       <rect x="0.5" y="0.500488" width="31" height="31" rx="15.5" fill="url(#paint0_linear_387_4228)"/>
+//       <path d="M10.7779 9.00049L15.9984 23.3205H16.0441L21.2208 9.00049H22.8405L16.8768 25.0005H15.0982L9.1582 9.00049H10.7779Z" fill="#231F20"/>
+//       <rect x="0.5" y="0.500488" width="31" height="31" rx="15.5" stroke="#231F20"/>
+//       <defs>
+//         <linearGradient id="paint0_linear_387_4228" x1="16" y1="0.000488281" x2="16" y2="32.0005" gradientUnits="userSpaceOnUse">
+//           <stop stop-color="#F7D7E5"/>
+//           <stop offset="1" stop-color="#F9D4CC"/>
+//         </linearGradient>
+//       </defs>
+//     </svg>`,
+//     {
+//       build:
+//         function() {
+//           template.superclass.build.call(this);
+//
+//           console.log(this)
+//
+//           this.getData().geoObject.events.add(
+//             'click',
+//             () => {
+//               console.log('click')
+//             },
+//             this,
+//           );
+//
+//
+//
+//           const placemarkEl = document.getElementById(id)
+//
+//           placemarkEl?.addEventListener('click', () => {
+//             // Старайся добавлять в массивы id
+//             const shopsCollection = document.querySelectorAll('.store-locator__list-item')
+//             const currentCityEl = document.getElementById(cityName)
+//             const currentShopEl = document.getElementById(id)?.parentNode
+//
+//             if (currentCityEl.classList.contains('fs-cmsfilter_active')) {
+//               shopsCollection.forEach(el => {
+//                 el.attributes['data-city'] !== currentShopEl.attributes['data-city']
+//                 && el.classList.remove('active')
+//               })
+//             }
+//
+//             currentCityEl.click()
+//
+//             myMap.setZoom(16, { smooth: true, centering: true });
+//             setTimeout(() => myMap.panTo(coordinates), 50)
+//
+//             setTimeout(() => {
+//               currentShopEl.classList.add('active')
+//               currentCityEl.classList.add('fs-cmsfilter_active')
+//             }, 200)
+//           })
+//         },
+//       disableDomEventListening: false
+//     }
 //   )
+//
+//   return template
 // }
 
 export default class extends module {
@@ -96,17 +143,16 @@ export default class extends module {
             const coordinates = shopInfo.coordinates
 
             var shopPlacemark = new ymaps.Placemark(coordinates, {
-              hintContent: shopInfo.name,
-              balloonContent: shopInfo.name,
+              hintContent: shopName,
               hasBalloon: false,
               url: shopInfo.url
             }, {
               // Опции.
               // Необходимо указать данный тип макета.
               iconLayout: 'default#imageWithContent',
+              // iconLayout: getPlacemarkContent(false),
               // Своё изображение иконки метки.
               iconImageHref: 'https://uploads-ssl.webflow.com/640dfc44890e1e178b3b2f19/6449f3ca43a6861b851a4938_vilet-pin.svg',
-              // iconLayout: getPlacemarkContent(false),
               // Размеры метки.
               iconImageSize: [56, 56],
               // Смещение левого верхнего угла иконки относительно
@@ -122,21 +168,29 @@ export default class extends module {
               // Старайся добавлять в массивы id
               const shopsCollection = document.querySelectorAll('.store-locator__list-item')
               const currentCityEl = document.getElementById(cityName)
-              const currentShopEl = document.getElementById(shopName)?.parentNode
 
-              if (currentCityEl.classList.contains('fs-cmsfilter_active')) {
-                shopsCollection.forEach(el => {
-                  el.attributes['data-city'] !== currentShopEl.attributes['data-city']
-                    && el.classList.remove('active')
-                })
+              // Таймауты - костыль из-за эффекта cmsfilter
+              setTimeout(() => {
+                const currentShopEl = document.getElementById(shopName)?.parentNode
+
+                if (currentCityEl.classList.contains('fs-cmsfilter_active')) {
+                  shopsCollection.forEach(el => {
+                    el.attributes['data-city'] !== currentShopEl?.attributes['data-city']
+                      && el.classList.remove('active')
+                  })
+                }
+              }, 200)
+
+              if (!currentCityEl.classList.contains('fs-cmsfilter_active')) {
+                currentCityEl.click()
               }
-
-              currentCityEl.click()
 
               myMap.setZoom(16, { smooth: true, centering: true });
               setTimeout(() => myMap.panTo(coordinates), 50)
 
               setTimeout(() => {
+                const currentShopEl = document.getElementById(shopName)?.parentNode
+
                 currentShopEl.classList.add('active')
                 currentCityEl.classList.add('fs-cmsfilter_active')
               }, 200)
