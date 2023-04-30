@@ -22,6 +22,7 @@ export default class extends module {
       var placemarkCollections = {};
       var placemarkList = {};
       const collectionItems = [...document.querySelectorAll(".collection-item")];
+      let activePlacemark;
 
       const cityList = collectionItems.reduce((acc, item) => {
         const city = item.dataset.city; // Получить имя города из атрибута data-city элемента коллекции
@@ -122,7 +123,9 @@ export default class extends module {
               }
 
               myMap.setZoom(16, { smooth: true, centering: true });
-              setTimeout(() => myMap.panTo(coordinates), 50)
+              setTimeout(() => myMap.panTo(coordinates, {
+                flying: true
+              }), 50)
 
               setTimeout(() => {
                 const currentShopEl = document.getElementById(shopName)?.parentNode
@@ -143,8 +146,6 @@ export default class extends module {
 
           // Добавляем коллекцию на карту
           myMap.geoObjects.add(cityCollection);
-
-          let activePlacemark;
 
           cityCollection.events.add('click', function(e) {
             if (activePlacemark) {
@@ -251,7 +252,25 @@ export default class extends module {
         //Увеличиваем карту до нужного размера
         myMap.setZoom(16, { smooth: true, centering: true });
         //Перемещаем карту к нужной метке
-        myMap.panTo(loc);
+        myMap.panTo(loc, { flying: true });
+
+        // И смена цвета меток в обратную сторону
+        const myGeoQuery = ymaps.geoQuery(myMap.geoObjects);
+
+        myGeoQuery.search(function(element) {
+          const elementCenter = element.geometry.getCoordinates();
+
+          if (elementCenter[0] === loc[0] && elementCenter[1] === loc[1]) {
+            if (activePlacemark) {
+              activePlacemark.options.set('iconImageHref', 'https://uploads-ssl.webflow.com/640dfc44890e1e178b3b2f19/6449f3ca43a6861b851a4938_vilet-pin.svg')
+            }
+            activePlacemark = element
+            activePlacemark.options.set('iconImageHref', 'https://uploads-ssl.webflow.com/644cf0bb77c9415291dcb44f/644e318c2508af5c44c0b028_vilet-pin-active.svg')
+            return true;
+          } else {
+            return false;
+          }
+        });
         // placemarkList[cityId][shopId].events.fire("click");
       });
     }, 50)
