@@ -273,6 +273,11 @@ export default class extends module {
         });
         // placemarkList[cityId][shopId].events.fire("click");
       });
+
+      // Убираем выделение после клика по городу
+      $(document).on("click", ".change-city", function () {
+        $(".open-map").parents(".store-locator__list-item").removeClass("active");
+      });
     }, 50)
   };
 }
