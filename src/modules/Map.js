@@ -24,6 +24,15 @@ export default class extends module {
       const collectionItems = [...document.querySelectorAll(".collection-item")];
       let activePlacemark;
 
+      // Переменные для информации о шопе на мобилке
+      const mobileShopInfoTitle = document.querySelector('.address_item-mobile-title')
+      const mobileShopInfoStreet = document.querySelector('.address_item-street')
+      const mobileShopInfoPhone = document.querySelector('.address_item-phone')
+      const mobileShopInfoWorkTime = document.querySelector('.address_work-time-current')
+      const mobileShopInfoOpening = document.querySelector('.adress__item-tag')
+      const shopInfoContainer = document.querySelector('.address_item-container')
+      const body = document.querySelector('body')
+
       const cityList = collectionItems.reduce((acc, item) => {
         const city = item.dataset.city; // Получить имя города из атрибута data-city элемента коллекции
         const name = item.innerText; // Получить имя магазина из текста элемента коллекции
@@ -116,6 +125,16 @@ export default class extends module {
                       && el.classList.remove('active')
                   })
                 }
+
+                // Карточка шопа на мобилке
+                shopInfoContainer.classList.add('address_item-container--active')
+                mobileShopInfoTitle.textContent = currentShopEl.attributes['data-shop'].value
+                mobileShopInfoStreet.textContent = currentShopEl.attributes['data-address'].value
+                mobileShopInfoPhone.textContent = currentShopEl.attributes['data-phone'].value
+                mobileShopInfoWorkTime.innerHTML = currentShopEl.querySelector('.address_work-time').outerHTML
+                currentShopEl.attributes['data-opening'].value === 'УЖЕ ОТКРЫТ'
+                    ? mobileShopInfoOpening.classList.remove('adress__item-tag--active')
+                    : mobileShopInfoOpening.classList.add('adress__item-tag--active')
               }, 200)
 
               if (!currentCityEl.classList.contains('fs-cmsfilter_active')) {
@@ -242,6 +261,14 @@ export default class extends module {
 
 //     });
 
+      // Кнопка закрытия информации о шопе на мобилке
+      const mobileShopInfoCloseBtn  = document.querySelector('.address__close-btn')
+
+      mobileShopInfoCloseBtn.addEventListener('click', () => {
+        const shopInfo = document.querySelector('.address_item-container')
+        shopInfo.classList.remove('address_item-container--active')
+      })
+
       // Работает также на элементах которых еще нет в dom!
       $(document).on("click", ".open-map", function () {
         //Забираем координаты из кнопки
@@ -272,6 +299,17 @@ export default class extends module {
           }
         });
         // placemarkList[cityId][shopId].events.fire("click");
+
+        // Карточка шопа на мобилке
+        shopInfoContainer.classList.add('address_item-container--active')
+        mobileShopInfoTitle.textContent = $(this).parents(".store-locator__list-item").attr('data-shop')
+        mobileShopInfoStreet.textContent = $(this).parents(".store-locator__list-item").attr('data-address')
+        mobileShopInfoPhone.textContent = $(this).parents(".store-locator__list-item").attr('data-phone')
+        mobileShopInfoWorkTime.innerHTML = $(this).parents(".store-locator__list-item").children('.address_work-time').outerHTML
+        $(this).parents(".store-locator__list-item").attr('data-opening') === 'УЖЕ ОТКРЫТ'
+            ? mobileShopInfoOpening.classList.remove('adress__item-tag--active')
+            : mobileShopInfoOpening.classList.add('adress__item-tag--active')
+        body.classList.add('map-show')
       });
 
       // Убираем выделение после клика по городу
