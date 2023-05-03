@@ -305,7 +305,7 @@ export default class extends module {
         mobileShopInfoTitle.textContent = $(this).parents(".store-locator__list-item").attr('data-shop')
         mobileShopInfoStreet.textContent = $(this).parents(".store-locator__list-item").attr('data-address')
         mobileShopInfoPhone.textContent = $(this).parents(".store-locator__list-item").attr('data-phone')
-        mobileShopInfoWorkTime.innerHTML = $(this).parents(".store-locator__list-item").children('.address_work-time').outerHTML
+        mobileShopInfoWorkTime.innerHTML = $(this).parents(".store-locator__list-item").find('.address_work-time').prop('outerHTML')
         $(this).parents(".store-locator__list-item").attr('data-opening') === 'УЖЕ ОТКРЫТ'
             ? mobileShopInfoOpening.classList.remove('adress__item-tag--active')
             : mobileShopInfoOpening.classList.add('adress__item-tag--active')
