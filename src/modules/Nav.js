@@ -30,16 +30,15 @@ export default class extends module {
             nav.classList.add('menu-open');
           }
     }
+   
     toggleMap(){
       
-        if (nav.classList.contains('map-show')) {
-          mapText.textContent = "SHOW MAP"
-            nav.classList.remove('map-show');
-          } else {
-            mapText.textContent = "SHOW LIST"
-            nav.classList.add('map-show');
-          }
-    }
+      if (nav.classList.contains('map-show')) {
+          nav.classList.remove('map-show');
+        } else {
+          nav.classList.add('map-show');
+        }
+  }
     
     closeNav(){
         nav.classList.remove("menu-open")
