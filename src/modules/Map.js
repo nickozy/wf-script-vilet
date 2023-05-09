@@ -98,7 +98,7 @@ export default class extends module {
               // Необходимо указать данный тип макета.
               iconLayout: 'default#imageWithContent',
               // Своё изображение иконки метки.
-              iconImageHref: 'https://uploads-ssl.webflow.com/640dfc44890e1e178b3b2f19/6449f3ca43a6861b851a4938_vilet-pin.svg',
+              iconImageHref: 'https://uploads-ssl.webflow.com/63fd0282d1adef725d6cb031/64531a151912a3a01cc19846_ecru-map-pin.svg',
               // Размеры метки.
               iconImageSize: [56, 56],
               // Смещение левого верхнего угла иконки относительно
@@ -143,7 +143,7 @@ export default class extends module {
 
               myMap.setZoom(16, { smooth: true, centering: true });
               setTimeout(() => myMap.panTo(coordinates, {
-                flying: true
+                flying: false
               }), 50)
 
               setTimeout(() => {
@@ -168,10 +168,10 @@ export default class extends module {
 
           cityCollection.events.add('click', function(e) {
             if (activePlacemark) {
-              activePlacemark.options.set('iconImageHref', 'https://uploads-ssl.webflow.com/640dfc44890e1e178b3b2f19/6449f3ca43a6861b851a4938_vilet-pin.svg')
+              activePlacemark.options.set('iconImageHref', 'https://uploads-ssl.webflow.com/63fd0282d1adef725d6cb031/64531a151912a3a01cc19846_ecru-map-pin.svg')
             }
             activePlacemark = e.get('target');
-            activePlacemark.options.set('iconImageHref', 'https://uploads-ssl.webflow.com/644cf0bb77c9415291dcb44f/644e318c2508af5c44c0b028_vilet-pin-active.svg')
+            activePlacemark.options.set('iconImageHref', 'https://uploads-ssl.webflow.com/63fd0282d1adef725d6cb031/64531a143a337dd8e616a215_ecru-map-pin--active.svg')
           })
         }
 
@@ -279,7 +279,7 @@ export default class extends module {
         //Увеличиваем карту до нужного размера
         myMap.setZoom(16, { smooth: true, centering: true });
         //Перемещаем карту к нужной метке
-        myMap.panTo(loc, { flying: true });
+        myMap.panTo(loc, { flying: false });
 
         // И смена цвета меток в обратную сторону
         const myGeoQuery = ymaps.geoQuery(myMap.geoObjects);
@@ -289,10 +289,10 @@ export default class extends module {
 
           if (elementCenter[0] === loc[0] && elementCenter[1] === loc[1]) {
             if (activePlacemark) {
-              activePlacemark.options.set('iconImageHref', 'https://uploads-ssl.webflow.com/640dfc44890e1e178b3b2f19/6449f3ca43a6861b851a4938_vilet-pin.svg')
+              activePlacemark.options.set('iconImageHref', 'https://uploads-ssl.webflow.com/63fd0282d1adef725d6cb031/64531a151912a3a01cc19846_ecru-map-pin.svg')
             }
             activePlacemark = element
-            activePlacemark.options.set('iconImageHref', 'https://uploads-ssl.webflow.com/644cf0bb77c9415291dcb44f/644e318c2508af5c44c0b028_vilet-pin-active.svg')
+            activePlacemark.options.set('iconImageHref', 'https://uploads-ssl.webflow.com/63fd0282d1adef725d6cb031/64531a143a337dd8e616a215_ecru-map-pin--active.svg')
             return true;
           } else {
             return false;
