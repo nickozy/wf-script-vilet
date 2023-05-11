@@ -150,6 +150,7 @@ export default class extends module {
                 const currentShopEl = document.getElementById(shopName)?.parentNode
 
                 currentShopEl.classList.add('active')
+                currentShopEl.scrollIntoView()
                 currentCityEl.classList.add('fs-cmsfilter_active')
               }, 200)
             });
@@ -316,6 +317,39 @@ export default class extends module {
       $(document).on("click", ".change-city", function () {
         $(".open-map").parents(".store-locator__list-item").removeClass("active");
       });
+
+      // // Подскролл к нужному элементу
+      // const observer = new IntersectionObserver(
+      //   entries => {
+      //     const el = entries[0]
+      //     const code = (el.target).dataset.code
+      //
+      //       if (el.isIntersecting) {
+      //         const order = activeCategories.findIndex(el => el.code === code)
+      //         visibilityMap.current.set(code, order)
+      //       } else {
+      //         visibilityMap.current.delete(code)
+      //       }
+      //
+      //       if (visibilityMap.current.size) {
+      //         let current
+      //         visibilityMap.current.forEach(order => {
+      //           current =
+      //               current == undefined || current > order ? order : current
+      //         })
+      //
+      //         throttledSetCategory(activeCategories[current]?.code)
+      //       }
+      //     },
+      //     {
+      //       threshold: [...Array(5)].map((_, index) => index * 0.25),
+      //     },
+      // )
+      //
+      // categoryRefs.current.forEach(el => observer.observe(el))
+      // return () => {
+      //   observer.disconnect()
+      // }
     }, 50)
   };
 }
