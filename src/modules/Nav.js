@@ -1,7 +1,6 @@
 import { module } from 'modujs';
 
 const nav = document.body;
-const mapText = document.querySelector(".map-text");
 
 export default class extends module {
     constructor(m) {
