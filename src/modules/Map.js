@@ -131,6 +131,7 @@ export default class extends module {
                 mobileShopInfoTitle.textContent = currentShopEl.attributes['data-shop'].value
                 mobileShopInfoStreet.textContent = currentShopEl.attributes['data-address'].value
                 mobileShopInfoPhone.textContent = currentShopEl.attributes['data-phone'].value
+                mobileShopInfoPhone.href = "tel:" + currentShopEl.attributes['data-phone'].value
                 mobileShopInfoWorkTime.innerHTML = currentShopEl.querySelector('.address_work-time').outerHTML
                 currentShopEl.attributes['data-opening'].value === 'УЖЕ ОТКРЫТ'
                     ? mobileShopInfoOpening.classList.remove('adress__item-tag--active')
@@ -306,6 +307,7 @@ export default class extends module {
         mobileShopInfoTitle.textContent = $(this).parents(".store-locator__list-item").attr('data-shop')
         mobileShopInfoStreet.textContent = $(this).parents(".store-locator__list-item").attr('data-address')
         mobileShopInfoPhone.textContent = $(this).parents(".store-locator__list-item").attr('data-phone')
+        mobileShopInfoPhone.href = "tel:" + $(this).parents(".store-locator__list-item").attr('data-phone')
         mobileShopInfoWorkTime.innerHTML = $(this).parents(".store-locator__list-item").find('.address_work-time').prop('outerHTML')
         $(this).parents(".store-locator__list-item").attr('data-opening') === 'УЖЕ ОТКРЫТ'
             ? mobileShopInfoOpening.classList.remove('adress__item-tag--active')
